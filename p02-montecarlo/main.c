@@ -79,11 +79,9 @@ int main(int argc, char *argv[]) {
     for (long i = 0; i < N_THREADS; i++)
         pthread_join(threads[i], NULL);
 
-
     double M = 0;
     for (long i = 0; i < N_THREADS; i++)
         M += (double) RESULTS[i];
-
 
     printf("Pi: %f\n", M / (double) N_POINTS * 4.0);
     free(RESULTS);
