@@ -50,19 +50,19 @@ def run_experiment(file, command):
 
 if __name__ == '__main__':
     # datafiles
-    data_p0 = 'data/data_p0.csv'
-    data_p1 = 'data/data_p1.csv'
+    data_p01 = 'data/data_p0.csv'
+    data_p02 = 'data/data_p1.csv'
 
     # run experiments and generate csv files
-    run_experiment(data_p0, 'java -jar ../p01-montecarlo/target/p01-montecarlo.jar')
-    run_experiment(data_p1, '../p02-montecarlo/cmake-build-debug/p02_montecarlo')
+    run_experiment(data_p01, 'java -jar ../p01-montecarlo/target/p01-montecarlo.jar')
+    run_experiment(data_p02, '../p02-montecarlo/cmake-build-debug/p02_montecarlo')
 
     # process results
-    results_p0 = process_experiment(data_p0)
-    results_p1 = process_experiment(data_p1)
+    results_p01 = process_experiment(data_p01)
+    results_p02 = process_experiment(data_p02)
 
     # generate plots
     for p in ITERATIONS:
-        p0 = (results_p0[p], 'Java')
-        p1 = (results_p1[p], 'C pthreads')
-        joint_plot(f'nPoints_{p}', f'Number of points = {p}', p0, p1)
+        p01 = (results_p01[p], 'Java')
+        p02 = (results_p02[p], 'C pthreads')
+        joint_plot(f'nPoints_{p}', f'Number of points = {p}', p01, p02)
