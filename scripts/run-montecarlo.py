@@ -4,17 +4,18 @@ import subprocess
 import time
 import pandas
 import matplotlib.pyplot as plt
+from progress.bar import Bar
 
-ITERATIONS = [10000000, 100000000, 1000000000, 10000000000]
-THREADS = [1, 2, 4, 8, 16]
+ITERATIONS = [10000000]#, 100000000, 1000000000, 10000000000]
+THREADS = [1, 2, 4]#, 8, 16]
 N_RUNS = 5
 
-OUT_DIR = "../observations/montecarlo"
+OUT_DIR = "../data/montecarlo"
 
 def joint_plot(figname, title, *y_axis):
     plt.figure()
     for axis, label in y_axis:
-        plt.plot(THREADS, axis, label=label)
+        plt.plot(THREADS, axis, '-o', label=label)
     plt.xlabel('Number of threads')
     plt.ylabel('Execution time (s)')
     plt.legend()
@@ -38,15 +39,19 @@ def process_experiment(data_file):
 
 
 def run_experiment(file, command):
+    n_experiences = len(ITERATIONS) * len(THREADS) * N_RUNS
+    bar = Bar(command, max = n_experiences, fill = '#', suffix='%(percent)d%% - %(elapsed)ds')
     with open(file, 'w') as f:
         f.write(f'N_POINTS,N_THREADS,EXEC_TIME\n')
         for it in ITERATIONS:
             for t in THREADS:
                 for r in range(N_RUNS):
                     start = time.time()
-                    subprocess.run(f'{command} -p {it} -t {t}', shell=True)
+                    subprocess.run(f'{command} -p {it} -t {t}', shell=True, stdout=subprocess.DEVNULL)
                     exec_time = time.time() - start
                     f.write(f'{it},{t},{exec_time}\n')
+                    bar.next()
+    bar.finish()
 
 
 if __name__ == '__main__':
@@ -56,18 +61,21 @@ if __name__ == '__main__':
     data_p03 = f'{OUT_DIR}/data_p03.csv'
 
     # run experiments and generate csv files
+    print('Running experiments:')
     run_experiment(data_p01, 'java -jar ../p01-montecarlo/target/p01-montecarlo.jar')
     run_experiment(data_p02, '../p02-montecarlo/cmake-build-debug/p02_montecarlo')
-    run_experiment(data_p02, '../p03-montecarlo/cmake-build-debug/p02_montecarlo')
+    run_experiment(data_p03, '../p03-montecarlo/cmake-build-debug/p03_montecarlo')
 
     # process results
+    print('Processing results...')
     results_p01 = process_experiment(data_p01)
     results_p02 = process_experiment(data_p02)
     results_p03 = process_experiment(data_p03)
 
     # generate plots
+    print('Generating plots...')
     for p in ITERATIONS:
         p01 = (results_p01[p], 'Java')
         p02 = (results_p02[p], 'C pthreads')
-        p03 = (results_p03[p], 'C openmp') 
+        p03 = (results_p03[p], 'C OpenMP')
         joint_plot(f'nPoints_{p}.png', f'Number of points = {p}', p01, p02, p03)
