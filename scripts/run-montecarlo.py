@@ -51,9 +51,9 @@ def run_experiment(file, command):
 
 if __name__ == '__main__':
     # datafiles
-    data_p01 = '{OUT_DIR}/data_p01.csv'
-    data_p02 = '{OUT_DIR}/data_p02.csv'
-    data_p03 = '{OUT_DIR}/data_p03.csv'
+    data_p01 = f'{OUT_DIR}/data_p01.csv'
+    data_p02 = f'{OUT_DIR}/data_p02.csv'
+    data_p03 = f'{OUT_DIR}/data_p03.csv'
 
     # run experiments and generate csv files
     run_experiment(data_p01, 'java -jar ../p01-montecarlo/target/p01-montecarlo.jar')
