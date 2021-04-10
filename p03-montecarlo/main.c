@@ -1,35 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <pthread.h>
-#include <string.h>
-#include <time.h>
+#include <omp.h>
 
 #define RADIUS 1
 
 int N_THREADS = 1;
 long N_POINTS = 100000000;
 long *RESULTS;
-
-
-typedef struct thread_data {
-    long points;
-    long thread_id;
-} thread_data;
-
-void *calculate_sector(void *data) {
-    thread_data *t_data = (thread_data *) data;
-    unsigned int seed = time(0);
-
-    long total = 0;
-    for (long i = 0; i < t_data->points; i++) {
-        double x = (double) rand_r(&seed) / ((double) RAND_MAX / RADIUS);
-        double y = (double) rand_r(&seed) / ((double) RAND_MAX / RADIUS);
-        if (x * x + y * y <= 1) total++;
-    }
-    RESULTS[t_data->thread_id] = total;
-
-    pthread_exit(0);
-}
 
 int argparse(int argc, char *argv[]) {
     for (long i = 0; i < argc; i++)
@@ -62,24 +39,17 @@ int argparse(int argc, char *argv[]) {
 int main(int argc, char *argv[]) {
     argparse(argc, argv);
 
-    RESULTS = malloc(sizeof(long) * N_THREADS);
-    pthread_t threads[N_THREADS];
-    thread_data t_data[N_THREADS];
-    long iterations = N_POINTS / N_THREADS;
-
-    for (int i = 0; i < N_THREADS; i++) {
-        t_data[i].points = iterations;
-        t_data[i].thread_id = i;
-        pthread_create(&threads[i], NULL, calculate_sector, &t_data[i]);
-    }
-
-    for (int i = 0; i < N_THREADS; i++)
-        pthread_join(threads[i], NULL);
-
     double M = 0;
-    for (long i = 0; i < N_THREADS; i++)
-        M += (double) RESULTS[i];
-
+    printf("%d\n", omp_get_thread_num());
+    omp_set_num_threads(N_THREADS);
+    #pragma omp parallel for shared(N_POINTS) reduction(+:M) default(none)
+    for(int i = 0; i < N_POINTS; i++){
+        printf("%d\n", omp_get_thread_num());
+        double x = (double) random() / ((double) RAND_MAX / RADIUS);
+        double y = (double) random() / ((double) RAND_MAX / RADIUS);
+        if (x * x + y * y <= 1) M++;
+    }
+    printf("%d\n", omp_get_thread_num());
     printf("Pi: %f\n", M / (double) N_POINTS * 4.0);
     free(RESULTS);
 
