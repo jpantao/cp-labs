@@ -35,7 +35,7 @@ The numbers of points to generate were **10 M**, **100 M**, **1 000 M**, **10 00
 
 
 #### **Results:**
-![10M](nPoints_10000000.png "10M"){:height="36px" width="36px"}
+<img src="nPoints_10000000.png" width="200" height="200">
 
 
 #### **Conclusions:**
