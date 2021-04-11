@@ -35,10 +35,8 @@ The numbers of points to generate were **10 M**, **100 M**, **1 000 M**, **10 00
 
 
 #### **Results:**
-<img src="nPoints_10000000.png" width="30%" height="30%">
-<img src="nPoints_100000000.png" width="30%" height="30%">
+<img src="nPoints_10000000.png" width="30%" height="30%"> <img src="nPoints_100000000.png" width="30%" height="30%">
 
-<img src="nPoints_1000000000.png" width="30%" height="30%">
-<img src="nPoints_10000000000.png" width="30%" height="30%">
+<img src="nPoints_1000000000.png" width="30%" height="30%"> <img src="nPoints_10000000000.png" width="30%" height="30%">
 
 #### **Conclusions:**
