@@ -41,12 +41,13 @@ int main(int argc, char *argv[]) {
     double M = 0;
 
     double x, y;
-    int i;
+    unsigned int seed = 0;
+    long points = N_POINTS / N_THREADS;
     omp_set_num_threads(N_THREADS);
-    #pragma omp parallel for shared(N_POINTS) private(x, y, i) reduction(+:M) default(none)
-    for(i = 0; i < N_POINTS; i++){
-        x = (double) rand() / ((double) RAND_MAX / RADIUS);
-        y = (double) rand() / ((double) RAND_MAX / RADIUS);
+    #pragma omp parallel for firstprivate(N_POINTS) private(x, y, seed) reduction(+:M) default(none)
+    for(int i = 0; i < N_POINTS; i++){
+        x = (double) rand_r(&seed) / ((double) RAND_MAX / RADIUS);
+        y = (double) rand_r(&seed) / ((double) RAND_MAX / RADIUS);
         if (x * x + y * y <= 1) M++;
     }
 

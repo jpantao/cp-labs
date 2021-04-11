@@ -6,8 +6,8 @@ import pandas
 import matplotlib.pyplot as plt
 from progress.bar import Bar
 
-ITERATIONS = [10000000]#, 100000000, 1000000000, 10000000000]
-THREADS = [1, 2, 4]#, 8, 16]
+ITERATIONS = [10000000, 100000000, 1000000000, 10000000000]
+THREADS = [1, 2, 4, 8, 16]
 N_RUNS = 5
 
 OUT_DIR = "../data/montecarlo"
