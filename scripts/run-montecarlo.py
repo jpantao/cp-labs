@@ -6,7 +6,7 @@ import pandas
 import matplotlib.pyplot as plt
 from progress.bar import IncrementalBar
 
-ITERATIONS = [10000000] #, 100000000, 1000000000, 10000000000]
+ITERATIONS = [10000000, 100000000, 1000000000, 10000000000]
 THREADS = [1, 2, 4, 8, 16]
 N_RUNS = 5
 
