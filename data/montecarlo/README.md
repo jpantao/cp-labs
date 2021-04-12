@@ -14,6 +14,7 @@ them.
 
 
 #### **Environment**:
+
 ```
 OS          Arch Linux x86_64 
 Host        XPS 13 9380 
@@ -35,6 +36,7 @@ The numbers of points to generate were **10 M**, **100 M**, **1 000 M**, **10 00
 
 
 #### **Results:**
-<img src="nPoints_10000000.png" width="20%" height="20%"> <img src="nPoints_100000000.png" width="20%" height="20%"> <img src="nPoints_1000000000.png" width="20%" height="20%"> <img src="nPoints_10000000000.png" width="20%" height="20%">
+<img src="10M_points.png" width="20%" height="20%"> <img src="100M_points.png" width="20%" height="20%">
+<img src="1000M_points.png" width="20%" height="20%"> <img src="10000M_points.png" width="20%" height="20%">
 
 #### **Conclusions:**

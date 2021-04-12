@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <omp.h>
 
 #define RADIUS 1
 
-int N_THREADS = 1;
-long N_POINTS = 100000000;
+int N_THREADS = 2;
+long N_POINTS = 100;
 
 int argparse(int argc, char *argv[]) {
     for (long i = 0; i < argc; i++)
@@ -38,17 +39,20 @@ int argparse(int argc, char *argv[]) {
 int main(int argc, char *argv[]) {
     argparse(argc, argv);
 
+    omp_set_num_threads(N_THREADS);
     double M = 0;
 
-    double x, y;
-    unsigned int seed = 0;
-    long points = N_POINTS / N_THREADS;
-    omp_set_num_threads(N_THREADS);
-    #pragma omp parallel for firstprivate(N_POINTS) private(x, y, seed) reduction(+:M) default(none)
-    for(int i = 0; i < N_POINTS; i++){
-        x = (double) rand_r(&seed) / ((double) RAND_MAX / RADIUS);
-        y = (double) rand_r(&seed) / ((double) RAND_MAX / RADIUS);
-        if (x * x + y * y <= 1) M++;
+    #pragma omp parallel num_threads(N_THREADS) shared(M) firstprivate(N_POINTS) default(none)
+    {
+        unsigned int seed = time(NULL);
+        double x, y;
+
+        #pragma omp for private(x, y) reduction(+:M)
+        for(int i = 0; i < N_POINTS; i++){
+            x = (double) rand_r(&seed) / ((double) RAND_MAX / RADIUS);
+            y = (double) rand_r(&seed) / ((double) RAND_MAX / RADIUS);
+            if (x * x + y * y <= 1) M++;
+        }
     }
 
     printf("Pi: %f\n", M / (double) N_POINTS * 4.0);

@@ -18,7 +18,7 @@ typedef struct thread_data {
 
 void *calculate_sector(void *data) {
     thread_data *t_data = (thread_data *) data;
-    unsigned int seed = time(0);
+    unsigned int seed = time(NULL);
 
     long total = 0;
     for (long i = 0; i < t_data->points; i++) {
@@ -82,6 +82,5 @@ int main(int argc, char *argv[]) {
 
     printf("Pi: %f\n", M / (double) N_POINTS * 4.0);
     free(RESULTS);
-
     return 0;
 }

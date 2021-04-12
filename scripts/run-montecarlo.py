@@ -4,9 +4,9 @@ import subprocess
 import time
 import pandas
 import matplotlib.pyplot as plt
-from progress.bar import Bar
+from progress.bar import IncrementalBar
 
-ITERATIONS = [10000000, 100000000, 1000000000, 10000000000]
+ITERATIONS = [10000000] #, 100000000, 1000000000, 10000000000]
 THREADS = [1, 2, 4, 8, 16]
 N_RUNS = 5
 
@@ -40,7 +40,7 @@ def process_experiment(data_file):
 
 def run_experiment(file, command):
     n_experiences = len(ITERATIONS) * len(THREADS) * N_RUNS
-    bar = Bar(command, max = n_experiences, fill = '#', suffix='%(percent)d%% - %(elapsed)ds')
+    bar = IncrementalBar(command.ljust(60), max = n_experiences, suffix='%(percent)d%% - %(elapsed)ds')
     with open(file, 'w') as f:
         f.write(f'N_POINTS,N_THREADS,EXEC_TIME\n')
         for it in ITERATIONS:
@@ -78,4 +78,4 @@ if __name__ == '__main__':
         p01 = (results_p01[p], 'Java')
         p02 = (results_p02[p], 'C pthreads')
         p03 = (results_p03[p], 'C OpenMP')
-        joint_plot(f'nPoints_{p}.png', f'Number of points = {p}', p01, p02, p03)
+        joint_plot(f'{int(p/1000000)}M_points.png', f'Number of points = {p}', p01, p02, p03)
