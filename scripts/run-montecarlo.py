@@ -56,18 +56,21 @@ def run_experiment(file, command):
 
 if __name__ == '__main__':
     # datafiles
+    data_p00 = f'{OUT_DIR}/data_p00.csv'
     data_p01 = f'{OUT_DIR}/data_p01.csv'
     data_p02 = f'{OUT_DIR}/data_p02.csv'
     data_p03 = f'{OUT_DIR}/data_p03.csv'
 
     # run experiments and generate csv files
     print('Running experiments:')
+    run_experiment(data_p00, 'java -jar ../p00-montecarlo/build/libs/p00-montecarlo.jar')
     run_experiment(data_p01, 'java -jar ../p01-montecarlo/target/p01-montecarlo.jar')
     run_experiment(data_p02, '../p02-montecarlo/cmake-build-debug/p02_montecarlo')
     run_experiment(data_p03, '../p03-montecarlo/cmake-build-debug/p03_montecarlo')
-
+    
     # process results
     print('Processing results...')
+    results_p00 = process_experiment(data_p00)
     results_p01 = process_experiment(data_p01)
     results_p02 = process_experiment(data_p02)
     results_p03 = process_experiment(data_p03)
@@ -75,7 +78,8 @@ if __name__ == '__main__':
     # generate plots
     print('Generating plots...')
     for p in ITERATIONS:
-        p01 = (results_p01[p], 'Java')
+        p00 = (results_p00[p], 'Kotlin Coroutines')
+        p01 = (results_p01[p], 'Java Threads')
         p02 = (results_p02[p], 'C pthreads')
         p03 = (results_p03[p], 'C OpenMP')
-        joint_plot(f'{int(p/1000000)}M_points.png', f'Number of points = {p}', p01, p02, p03)
+        joint_plot(f'{int(p/1000000)}M_points.png', f'{int(p/1000000)}M points', p00, p01, p02, p03)

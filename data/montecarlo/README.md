@@ -22,7 +22,7 @@ Kernel      5.11.12-arch1-1
 CPU         Intel i7-8565U @ 4.600GHz 
 Cores       4
 Threads     8
-Memory      16GB DD3
+Memory      16GB DDR3
 ```
 
 #### **Parameters:**

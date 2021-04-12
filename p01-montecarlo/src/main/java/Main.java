@@ -6,7 +6,7 @@ public class Main {
     private static final long RADIUS = 1;
 
     // defaults
-    private static long N_POINTS = 100000000;
+    private static long N_POINTS = 1000;
     private static int N_THREADS = 1;
     private static long[] RESULTS;
 
@@ -54,7 +54,7 @@ public class Main {
             })).start();
         }
         for (Thread t : threads) t.join();
-        System.out.println("Pi: " + (double) Arrays.stream(RESULTS).sum() / N_POINTS * 4.0);
+        System.out.println(0 + (double) Arrays.stream(RESULTS).sum() / N_POINTS * 4.0);
 
     }
 }
