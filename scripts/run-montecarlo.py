@@ -45,7 +45,7 @@ def run_experiment(file, command):
         f.write(f'N_POINTS,N_THREADS,EXEC_TIME\n')
         for it in ITERATIONS:
             for t in THREADS:
-                for r in range(N_RUNS):
+                for _ in range(N_RUNS):
                     start = time.time()
                     subprocess.run(f'{command} -p {it} -t {t}', shell=True, stdout=subprocess.DEVNULL)
                     exec_time = time.time() - start
