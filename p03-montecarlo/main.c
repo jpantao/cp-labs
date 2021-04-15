@@ -39,7 +39,6 @@ int argparse(int argc, char *argv[]) {
 int main(int argc, char *argv[]) {
     argparse(argc, argv);
 
-    omp_set_num_threads(N_THREADS);
     double M = 0;
 
     #pragma omp parallel num_threads(N_THREADS) shared(M) firstprivate(N_POINTS) default(none)
@@ -48,7 +47,7 @@ int main(int argc, char *argv[]) {
         double x, y;
 
         #pragma omp for private(x, y) reduction(+:M)
-        for(int i = 0; i < N_POINTS; i++){
+        for(long i = 0; i < N_POINTS; i++){
             x = (double) rand_r(&seed) / ((double) RAND_MAX / RADIUS);
             y = (double) rand_r(&seed) / ((double) RAND_MAX / RADIUS);
             if (x * x + y * y <= 1) M++;

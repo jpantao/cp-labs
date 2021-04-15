@@ -5,7 +5,8 @@ This repository contains some examples from my concurrency and parallelization c
 ```
 .                    
 ├── data             # experiment data and reports
-├── p01-montecarlo   # pi approximation by the montecarlo method (Java)
+├── p00-montecarlo   # pi approximation by the montecarlo method (Kotlin - Coroutines)
+├── p01-montecarlo   # pi approximation by the montecarlo method (Java - Threads)
 ├── p02-montecarlo   # pi approximation by the montecarlo method (C - pthread)
 ├── p03-openmp       # pi approximation by the montecarlo method (C - OpenMP)
 ├── scripts          # scripts to run the experiments
