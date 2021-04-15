@@ -18,7 +18,7 @@ The **data** directory contains the data and evaluations of each experiment spec
 in which they were performed.
 The scripts to execute these experiments can be found in the **scripts** directory and the executable
 files that were used are also provided along with the code. Note that the scripts take into consideration
-the location of the executable files. 
+the location of the executable files ant they are meant to be executed from within the **scripts** directory. 
 
 If you want to compile them by yourself there are instructions on how to do it in the **README** of the project's directory.
 
