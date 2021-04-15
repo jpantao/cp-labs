@@ -13,3 +13,16 @@ This repository contains some examples from my concurrency and parallelization c
 ├── LICENSE
 └── README.md        # this file
 ```
+
+The **data** directory contains the data and evaluations of each experiment specifying the environment
+in which they were performed.
+The scripts to execute these experiments can be found in the **scripts** directory and the executable
+files that were used are also provided along with the code. Note that the scripts take into consideration
+the location of the executable files. 
+
+If you want to compile them by yourself there are instructions on how to do it in the **README** of the project's directory.
+
+#### **Experiments:**
+
+- Pi approximation by the Montecarlo method performance comparison [./data/montecarlo/README.md];
+- TODO: Game of Life.

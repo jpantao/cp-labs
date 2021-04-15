@@ -65,8 +65,8 @@ if __name__ == '__main__':
     print('Running experiments:')
     run_experiment(data_p00, 'java -jar ../p00-montecarlo/build/libs/p00-montecarlo.jar')
     run_experiment(data_p01, 'java -jar ../p01-montecarlo/target/p01-montecarlo.jar')
-    run_experiment(data_p02, '../p02-montecarlo/cmake-build-debug/p02_montecarlo')
-    run_experiment(data_p03, '../p03-montecarlo/cmake-build-debug/p03_montecarlo')
+    run_experiment(data_p02, '../p02-montecarlo/p02_montecarlo')
+    run_experiment(data_p03, '../p03-montecarlo/p03_montecarlo')
     
     # process results
     print('Processing results...')
