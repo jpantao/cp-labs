@@ -1,0 +1,73 @@
+Game of Life
+============
+(c) 2009, Raphael Kubo da Costa <kubito@gmail.com>
+(c) 2020, João Lourenço <joao.lourenco@fct.unl.pt>
+
+
+------------
+Changelog
+------------
+2020-03-23 <joao.lourenco> Changed the multithreaded version to be a simple sequential program
+
+
+------------
+Introduction
+------------
+A simple, multithreaded implementation of the Game of Life created by John Conway. The code is written in ANSI C (-ansi and -pedantic return no warnings). The most up-to-date version get be obtained from <http://github.cmo/rakuco/gameoflife>.
+
+This implementation was created as an assignment in a course on Operating Systems at State University of Campinas, Brazil.
+
+This program is free software and is licensed under the GNU Public License, version 3.
+
+It should be noted that by no means is this program intented to be full-featured and fast - it was the first assignment in the course and its intent was not to provide an efficient implementation of the Game of Life. Actually, my main intentions while writing this program were both to provide easy to read, quality code and practise the usage of pthreads.
+
+For a full-featured, very nice Game of Life implementation, check Golly, an open-source, cross-platform GoL implementation at <http://golly.sourceforge.net>.
+
+--------
+Building
+--------
+The program has only been (not so extensively) tested on Linux, under a 2.6+ kernel with NPTL. Feel free to try to run it under a BSD, for example.
+
+Requirements
+  The program only requires the GNU libc and PCRE (which can be obtained from www.pcre.org). In fact, other standard C libraries might work, as long as they provide a POSIX threads implementation.
+  If you intend to generate the documentation for the project, you need doxygen and graphviz.
+
+Compilation
+  To compile the program you just need to run 'make'.
+  To generate the documentation, you need to run 'make doc'.
+
+-----
+Usage
+-----
+The program must be invoked from command line and has two required parameters: the number of generations for which to run and the file containing the seed board (the initial board state).
+
+Example:
+  glife 3 board.txt
+
+This should read the file board.txt, use it as the initial board state and then run the program for 3 generations.
+
+-----------------
+Board file format
+-----------------
+Currently, this implementation only supports its own very simple file format.
+
+The first line must consist of the string 'Rows:' followed by a positive integer R that will be used as the number of rows in the board.
+
+The second line must consist of the string 'Cols:' followed by a positive integer C that will be used as the number of columns in the board.
+
+The following R lines of the file must consist of C characters that should be either '.' or '#', the former representing a dead cell and the latter representing a living cell.
+
+-------------------------
+Implementation discussion
+-------------------------
+This was the first time I used PCRE in C. Using PCRE to validate two lines sounds a little overkill, but it saved some ugly loops and state checking. Besides, the board lines are also read using a regular expression.
+
+The code has been run through Valgrind, and no memory leaks were found.
+
+I hope the whole code is simple enough to be understood in a few minutes. The command line is parsed into a GameConfig structure, then the board file is opened and read into a Game structure, which stores every cell in an array of 0's and 1's, being 0 the dead state and 1 the living state. Then for G times, being G the number of generations specified in the command line, the board 'ticks' (it advances one generation) and the new board state is printed out.
+
+As for the algorithm for the 'tick': the implementation chosen for this program is not very efficient, as this was not the main purpose of this assignment.
+
+The board is divided into "vertical stripes", with R cells of height and BOARD_SLICE_WIDTH cells of width, being R the number of rows in the board and BOARD_SLICE_WIDTH a constant defined in game.h. By default, BOARD_SLICE_WIDTH is set to 1, which actually means 1 thread per board column. In fact, 1 is almost always a bad value: if the board is wide, the number of threads being run concurrently might make the program slower than a sequential version. A more efficient algorithm should choose the value of BOARD_SLICE_WIDTH dinamically based on the width of the board.
+
+Each of these stripes is manipulated by a different thread, which linearly checks each cell's neighbour to see if the current cell should be dead or alive in the next generation.
