@@ -25,4 +25,4 @@ If you want to compile them by yourself there are instructions on how to do it i
 #### **Experiments:**
 
 - Pi approximation by the Montecarlo method performance comparison (results available [here](./data/montecarlo/README.md));
-- TODO: Game of Life.
+- Game of Life parallelized using OpenMP (results available [here](./data/gameoflife/README.md)).
