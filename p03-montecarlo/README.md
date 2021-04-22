@@ -13,7 +13,7 @@ make
 
 **Running:**
 ```bash
-./p03-montecarlo
+./p03_montecarlo
 ```
 
 | Option         | Description                   |
