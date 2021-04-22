@@ -6,9 +6,9 @@ import pandas
 import matplotlib.pyplot as plt
 from progress.bar import IncrementalBar
 
-TEST = 1
-GENERATIONS = [100]
-THREADS = [1, 2, 4, 8, 16]
+TEST = 13
+GENERATIONS = [20]
+THREADS = [1, 2, 4, 8, 16, 32]
 N_RUNS = 5
 
 BOARD = f'../p04-gameoflife/tests/{TEST}.in'
