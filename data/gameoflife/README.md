@@ -29,3 +29,4 @@ The numbers of threads used were **1**, **2**, **4**, **6**, **8**, and **16**.
 
 #### **Results:**
 <img src="test1_100generations.png" width="50%" height="50%"> 
+<img src="test13_100generations.png" width="50%" height="50%"> 
