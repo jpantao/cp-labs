@@ -17,46 +17,61 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <omp.h>
 #include "config.h"
 #include "game.h"
 
-int main(int argc, char *argv[])
-{
-  GameConfig *config;
-  Game *game;
-  size_t generation;
+int main(int argc, char *argv[]) {
+    GameConfig *config;
+    Game *game;
+    size_t generation;
 
-  config = game_config_new_from_cli(argc, argv);
-  if (!config)
-    exit(2);
+    config = game_config_new_from_cli(argc, argv);
+    if (!config)
+        exit(2);
 
-  game = game_new();
-  if (game_parse_board(game, config)) {
-    fprintf(stderr, "Could not read the board file.\n");
+    game = game_new();
+    if (game_parse_board(game, config)) {
+        fprintf(stderr, "Could not read the board file.\n");
+
+        game_config_free(config);
+        game_free(game);
+
+        exit(1);
+    }
+
+    omp_set_num_threads(config->n_threads);
+
+    generation = 0;
+    printf("\x1b[H");
+    printf("\x1b[0J");
+    printf("\x1b[s");
+    printf("\nGeneration %zu:\n", generation);
+    game_print_board(game);
+
+    for (generation = 1; generation <= game_config_get_generations(config); generation++) {
+        if (game_tick(game)) {
+            fprintf(stderr, "Error while advancing to the next generation.\n");
+            game_config_free(config);
+            game_free(game);
+        }
+
+        if(config->quiet_mode != 0
+        && generation < game_config_get_generations(config))
+            continue;
+
+        //print board
+        printf("\x1b[u");
+        printf("\x1b[s");
+        printf("\x1b[0J");
+        printf("\nGeneration %zu:\n", generation);
+        game_print_board(game);
+        usleep(config->pause * 1000);
+    }
 
     game_config_free(config);
     game_free(game);
 
-    exit(1);
-  }
-
-  generation = 0;
-  printf("\nGeneration %zu:\n", generation);
-  game_print_board(game);
-
-  for (generation = 1; generation <= game_config_get_generations(config); generation++) {
-    if (game_tick(game)) {
-      fprintf(stderr, "Error while advancing to the next generation.\n");
-      game_config_free(config);
-      game_free(game);
-    }
-
-    printf("\nGeneration %zu:\n", generation);
-    game_print_board(game);
-  }
-
-  game_config_free(config);
-  game_free(game);
-
-  return 0;
+    return 0;
 }

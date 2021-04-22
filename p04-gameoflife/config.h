@@ -28,12 +28,19 @@
 
 #define CLI_ARGC 3
 
+#define DEFAULT_N_THREADS 1
+#define DEFAULT_FRAME_RATE 1000
+#define DEFAULT_QUIET_MODE 0    // False
+
 /**
  * Structure to hold the game options.
  */
 typedef struct {
-  size_t generations; /**< Number of generations for which to run the game. */
-  FILE *input_file;   /**< The file with the seed board. */
+    int n_threads;              /**< Number of threads to use */
+    int quiet_mode;             /**< Optional quiet mode boolean, if set only the last frame is printed */
+    int pause;                  /**< Optional number of milliseconds to wait before printing the boards for each generation */
+    size_t generations;         /**< Number of generations for which to run the game. */
+    FILE *input_file;           /**< The file with the seed board. */
 } GameConfig;
 
 /**
