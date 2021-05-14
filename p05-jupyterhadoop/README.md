@@ -27,3 +27,8 @@ docker exec -it $( docker container ls | grep joaomlourenco/spbd-1920-lab1 | awk
 
 Now, just follow the instructions the professor left on the notebook. 
 You can my implementations on the [code](code) directory.
+
+---
+
+### TODO: 
+- Implement the sort map-reduce.
