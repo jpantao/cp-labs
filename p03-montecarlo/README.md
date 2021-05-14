@@ -1,4 +1,4 @@
-# P03-montecarlo
+# p03-montecarlo
 Pi approximation by the Montecarlo method using **C OpenMP**.
 
 **Compiling:**

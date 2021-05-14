@@ -1,4 +1,4 @@
-# P01-montecarlo
+# p01-montecarlo
 Pi approximation by the Montecarlo method using **Java Threads**.
 
 **Compiling:**

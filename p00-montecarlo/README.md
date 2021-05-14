@@ -1,4 +1,4 @@
-# P00-montecarlo
+# p00-montecarlo
 Pi approximation by the Montecarlo method using **Kotlin's coroutines**.
 
 **Compiling:**

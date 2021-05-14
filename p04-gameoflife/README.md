@@ -1,4 +1,4 @@
-# P04-gameoflife
+# p04-gameoflife
 Adaptation of the game of life program, present [here](https://bitbucket.org/joaomlourenco/game_of_life_seq/src/master/).
 
 **Compiling:**
