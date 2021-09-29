@@ -9,9 +9,7 @@ This repository contains some examples from my concurrency and parallelization c
 ├── p01-montecarlo    # pi approximation by the montecarlo method (Java - Threads)
 ├── p02-montecarlo    # pi approximation by the montecarlo method (C - pthread)
 ├── p03-openmp        # pi approximation by the montecarlo method (C - OpenMP)
-├── p04-gameoflife    # multithreaded implementation of the game of life created by John Conway
-├── p05-jupyterhadoop # introduction to jupyter notebooks and hadoop map reduce
-├── p06-mapreduce     # map reduce for processing DDoS logs
+├── p04-gameoflife     # multithreaded implementation of the game of life created by John Conway
 ├── scripts           # scripts to run the experiments
 ├── LICENSE
 └── README.md         # this file
